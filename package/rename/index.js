@@ -1,5 +1,4 @@
 const fs = require("fs");
-const path = require("path");
 const { ensureDirExistence } = require("../../utlis");
 
 // 根据数据进行文件映射
@@ -26,6 +25,8 @@ function dataMappingFile({ inputDir, outDir, data, dataKey }) {
       })
       .sort((a, b) => a.index - b.index);
 
+      console.log("files = ", files)
+
     // 重命名文件
     const tasks = files.map(({ fileName }, index) => {
       const ext = fileName.split(".").pop();
@@ -47,6 +48,7 @@ function dataMappingFile({ inputDir, outDir, data, dataKey }) {
       });
     });
 
+    // 批量执行重命名操作
     Promise.allSettled(tasks).then((results) => {
       const rejectedItem = results.find((v) => v.status === "rejected");
       if (rejectedItem) {

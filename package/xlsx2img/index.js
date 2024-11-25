@@ -4,7 +4,7 @@ const AdmZip = require("adm-zip");
 const { ensureDirExistence } = require("../../utlis");
 
 function xlsx2img({ input, output }) {
-  // 1.压缩文件
+  // 1.重命名 xlsx 文件为 zip 文件
   const zipPath = path.join(__dirname, "copy.zip");
   fs.copyFileSync(input, zipPath);
 
