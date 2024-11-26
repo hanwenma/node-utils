@@ -1,6 +1,6 @@
 const path = require("path");
 const { downloadFile } = require("./package/download");
-const airlineData = require("./mock/airlineData.json");
+const { xlsxToJson } = require("./package/xlsx2json");
 
 downloadFile({
     linkList: airlineData.map((item) => {
