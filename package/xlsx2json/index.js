@@ -3,6 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const { ensureDirExistence } = require("../../utlis");
 
+// 处理语言 xlsx
 function handleLang(result, { input, output, targetDirectory }) {
   // 用于判断是【中 -> 英】还是【英 -> 中】
   const ChineseReg = new RegExp("[\\u4E00-\\u9FFF]+");
@@ -59,14 +60,13 @@ function handleLang(result, { input, output, targetDirectory }) {
 }
 
 function xlsxToJson(
-  callback = handleLang,
   option = {
     input: path.join(__dirname, `./lang.xlsx`),
     output: path.join(__dirname, "./i18n.json"),
     targetDirectory: path.join(__dirname, "../src/lang"),
-  }
+  },
+  callback
 ) {
-  
   const { input, output } = option;
 
   xlsx2json(
@@ -80,9 +80,9 @@ function xlsxToJson(
         return;
       }
 
-      callback(result, option);
+      callback && callback(result, option);
     }
   );
 }
 
-module.exports = { xlsxToJson };
+module.exports = { xlsxToJson, handleLang };
