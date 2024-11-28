@@ -67,12 +67,18 @@ function xlsxToJson(
   },
   callback
 ) {
-  const { input, output } = option;
+
+  // 不传入 output 需要生成默认的输出路径
+  if (!option.output) {
+    const inputPaths = option.input.split("/");
+    const fileName = inputPaths.pop().split(".")[0];
+    option.output = path.join(inputPaths.join("/"), `${fileName}.json`);
+  }
 
   xlsx2json(
     {
-      input,
-      output,
+      input: option.input,
+      output: option.output,
     },
     function (err, result) {
       if (err) {
@@ -80,7 +86,7 @@ function xlsxToJson(
         return;
       }
 
-      callback && callback(result, option);
+      callback && setTimeout(() => callback(result, option), 2000);
     }
   );
 }
